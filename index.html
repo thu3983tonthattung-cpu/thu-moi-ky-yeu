@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thư Mời Kỷ Yếu</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      min-height:100vh;
+      overflow-x:hidden;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:30px;
+
+      background:
+      radial-gradient(circle at top left,#ffd9e6,#fff1f5 40%),
+      linear-gradient(135deg,#ffeaf1,#fff7fa);
+
+      font-family:'Quicksand',sans-serif;
+      position:relative;
+    }
+
+    /* TIM BAY */
+
+    .heart{
+      position:fixed;
+      bottom:-50px;
+      color:#ff77a8;
+      animation:float 8s linear infinite;
+      opacity:0.7;
+      pointer-events:none;
+      z-index:1;
+    }
+
+    @keyframes float{
+      0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:0;
+      }
+
+      10%{
+        opacity:1;
+      }
+
+      100%{
+        transform:translateY(-120vh) rotate(360deg);
+        opacity:0;
+      }
+    }
+
+    /* SPARKLE */
+
+    .sparkle{
+      position:absolute;
+      color:white;
+      font-size:26px;
+      animation:blink 2s infinite;
+    }
+
+    @keyframes blink{
+      0%,100%{
+        opacity:0.3;
+        transform:scale(1);
+      }
+
+      50%{
+        opacity:1;
+        transform:scale(1.4);
+      }
+    }
+
+    /* ENVELOPE */
+
+    .envelope{
+      width:760px;
+      height:500px;
+      position:relative;
+      cursor:pointer;
+      transition:0.5s;
+      z-index:5;
+    }
+
+    .envelope:hover{
+      transform:scale(1.03);
+    }
+
+    .envelope-body{
+      width:100%;
+      height:100%;
+      background:#ffc7d8;
+      border-radius:35px;
+      position:relative;
+      overflow:hidden;
+
+      box-shadow:
+      0 30px 70px rgba(255,105,150,0.25),
+      0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .flap{
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:#ff91b4;
+      clip-path:polygon(0 0,50% 58%,100% 0);
+      transform-origin:top;
+      transition:1s;
+      z-index:4;
+    }
+
+    .left{
+      position:absolute;
+      width:50%;
+      height:55%;
+      background:#ffb3c8;
+      left:0;
+      bottom:0;
+      clip-path:polygon(0 100%,100% 0,100% 100%);
+    }
+
+    .right{
+      position:absolute;
+      width:50%;
+      height:55%;
+      background:#ffb3c8;
+      right:0;
+      bottom:0;
+      clip-path:polygon(0 0,100% 100%,0 100%);
+    }
+
+    .invite-text{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      text-align:center;
+      z-index:2;
+      width:100%;
+      padding:20px;
+    }
+
+    .invite-text h1{
+      font-family:'Great Vibes',cursive;
+      font-size:95px;
+      color:white;
+    }
+
+    .invite-text p{
+      color:white;
+      font-size:30px;
+      margin-top:10px;
+    }
+
+    .seal{
+      position:absolute;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      width:95px;
+      height:95px;
+      background:#ff5d8f;
+      border-radius:50%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      color:white;
+      font-size:42px;
+      z-index:5;
+
+      box-shadow:0 10px 20px rgba(255,93,143,0.4);
+    }
+
+    /* CARD */
+
+    .card{
+      position:absolute;
+      width:700px;
+      max-width:95%;
+      background:white;
+      border-radius:35px;
+      padding:45px;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%) scale(0);
+
+      transition:1s;
+      z-index:10;
+
+      box-shadow:
+      0 30px 70px rgba(0,0,0,0.15);
+
+      max-height:90vh;
+      overflow-y:auto;
+    }
+
+    .card.show{
+      transform:translate(-50%,-50%) scale(1);
+    }
+
+    .profile{
+      width:180px;
+      height:180px;
+      object-fit:cover;
+      border-radius:50%;
+      display:block;
+      margin:0 auto 25px;
+
+      border:6px solid #ffd4e2;
+
+      box-shadow:
+      0 10px 30px rgba(255,105,150,0.25);
+    }
+
+    .card h2{
+      text-align:center;
+      color:#ff5d8f;
+      font-size:52px;
+      font-family:'Great Vibes',cursive;
+      margin-bottom:30px;
+    }
+
+    .info{
+      margin:20px 0;
+      font-size:24px;
+      line-height:1.9;
+      color:#555;
+    }
+
+    .info strong{
+      color:#ff5d8f;
+    }
+
+    .map-btn{
+      display:inline-block;
+      margin-top:10px;
+      padding:14px 24px;
+      background:#ff8fb1;
+      color:white;
+      text-decoration:none;
+      border-radius:999px;
+      transition:0.3s;
+      font-size:18px;
+    }
+
+    .map-btn:hover{
+      transform:scale(1.05);
+      background:#ff5d8f;
+    }
+
+    .cute-text{
+      margin-top:35px;
+      text-align:center;
+      line-height:2;
+      color:#666;
+      font-size:22px;
+      font-style:italic;
+    }
+
+    /* RSVP */
+
+    .rsvp{
+      margin-top:40px;
+      text-align:center;
+      padding-top:30px;
+      border-top:2px dashed #ffd1de;
+    }
+
+    .rsvp h3{
+      color:#ff5d8f;
+      font-size:34px;
+      margin-bottom:25px;
+    }
+
+    .btn-group{
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .answer-btn{
+      border:none;
+      padding:16px 28px;
+      border-radius:999px;
+      font-size:20px;
+      cursor:pointer;
+      transition:0.3s;
+      font-weight:700;
+    }
+
+    .yes{
+      background:#ff6f9f;
+      color:white;
+    }
+
+    .no{
+      background:#ffe0ea;
+      color:#ff5d8f;
+    }
+
+    .answer-btn:hover{
+      transform:scale(1.08);
+    }
+
+    /* MOBILE */
+
+    @media(max-width:768px){
+
+      .envelope{
+        width:95%;
+        height:320px;
+      }
+
+      .invite-text h1{
+        font-size:58px;
+      }
+
+      .invite-text p{
+        font-size:22px;
+      }
+
+      .card{
+        padding:28px;
+      }
+
+      .card h2{
+        font-size:38px;
+      }
+
+      .info{
+        font-size:18px;
+      }
+
+      .cute-text{
+        font-size:17px;
+      }
+
+      .profile{
+        width:140px;
+        height:140px;
+      }
+
+      .answer-btn{
+        width:100%;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- SPARKLES -->
+
+  <div class="sparkle" style="top:8%;left:12%;">✦</div>
+  <div class="sparkle" style="top:15%;right:15%;">✧</div>
+  <div class="sparkle" style="bottom:15%;left:15%;">✦</div>
+  <div class="sparkle" style="bottom:10%;right:12%;">✧</div>
+
+  <!-- ENVELOPE -->
+
+  <div class="envelope" onclick="openInvite()">
+
+    <div class="envelope-body">
+
+      <div class="flap" id="flap"></div>
+
+      <div class="left"></div>
+      <div class="right"></div>
+
+      <div class="invite-text">
+        <h1>You're Invited...</h1>
+        <p>💌 Nhấn để mở thư mời 💌</p>
+      </div>
+
+      <div class="seal">
+        ❤
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- CARD -->
+
+  <div class="card" id="card">
+
+    <!-- THAY ẢNH Ở ĐÂY -->
+    <img src="thu.jpg" class="profile">
+
+    <h2>📸 Kỷ yếu của Nguyên Thư</h2>
+
+    <div class="info">
+      <strong>💖 Gửi đến:</strong>
+      <span id="guestName"></span>
+    </div>
+
+    <div class="info">
+      <strong>⏰ Thời điểm:</strong><br>
+      10h00 - 26/5/2026
+    </div>
+
+    <div class="info">
+      <strong>📍 Địa điểm:</strong><br>
+      Sân trường THPT Tây Thạnh
+    </div>
+
+    <div class="info">
+      <strong>🗺️ Địa chỉ cụ thể:</strong><br>
+
+      <a class="map-btn"
+      href="https://maps.app.goo.gl/Pxkj277N1GgbRRgB8"
+      target="_blank">
+
+      Xem Google Maps
+      </a>
+    </div>
+
+    <div class="info">
+      <strong>📞 Số điện thoại:</strong><br>
+      0969595740
+    </div>
+
+    <div class="cute-text">
+      ✨ Sự hiện diện của bạn sẽ là một phần thật đẹp
+      trong thanh xuân của mình...<br><br>
+
+      Mong rằng chúng ta sẽ cùng nhau lưu giữ
+      những khoảnh khắc đáng nhớ nhất của tuổi học trò 💕
+    </div>
+
+    <!-- RSVP -->
+
+    <div class="rsvp">
+
+      <h3>💌 Bạn sẽ tham gia chứ?</h3>
+
+      <div class="btn-group">
+
+        <button class="answer-btn yes"
+        onclick="sendResponse('Có tham gia 💖')">
+
+        Mình sẽ tới ✨
+        </button>
+
+        <button class="answer-btn no"
+        onclick="sendResponse('Không tham gia 😭')">
+
+        Mình tiếc quá 🥺
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- EMAILJS -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <script>
+
+    // EMAILJS
+
+    emailjs.init("lj2GpslfRzqi4OmXA");
+
+    // LƯU TÊN
+
+    let guest = "";
+
+    // TIM BAY
+
+    function createHeart(){
+
+      const heart = document.createElement("div");
+
+      heart.classList.add("heart");
+
+      heart.innerHTML = "❤";
+
+      heart.style.left =
+      Math.random() * 100 + "vw";
+
+      heart.style.fontSize =
+      (Math.random() * 25 + 20) + "px";
+
+      heart.style.animationDuration =
+      (Math.random() * 5 + 5) + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(()=>{
+        heart.remove();
+      },10000);
+    }
+
+    setInterval(createHeart,500);
+
+    // MỞ THƯ
+
+    function openInvite(){
+
+      guest = prompt("💌 Nhập tên của bạn:");
+
+      if(guest){
+
+        document.getElementById("guestName")
+        .innerText = guest;
+
+      }else{
+
+        guest = "Người đặc biệt ✨";
+
+        document.getElementById("guestName")
+        .innerText = guest;
+      }
+
+      document.getElementById("flap")
+      .style.transform = "rotateX(180deg)";
+
+      document.getElementById("card")
+      .classList.add("show");
+    }
+
+    // GỬI MAIL
+
+    function sendResponse(status){
+
+      emailjs.send(
+
+        "service_kflalvr",
+
+        "template_t752ugt",
+
+        {
+          name: guest,
+          status: status
+        }
+
+      )
+
+      .then(function(){
+
+        alert("💌 Đã gửi phản hồi thành công!");
+
+      })
+
+      .catch(function(error){
+
+        alert("😭 Gửi thất bại!");
+
+        console.log(error);
+
+      });
+
+    }
+
+  </script>
+
+</body>
+</html>
